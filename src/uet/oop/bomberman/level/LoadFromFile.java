@@ -16,7 +16,6 @@ import uet.oop.bomberman.entities.tile.destroyable.Brick;
 import uet.oop.bomberman.entities.tile.item.BombItem;
 import uet.oop.bomberman.entities.tile.item.FlameItem;
 import uet.oop.bomberman.entities.tile.item.SpeedItem;
-import uet.oop.bomberman.exceptions.LoadLevelException;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -31,7 +30,7 @@ public class LoadFromFile extends LoadLevel {
 	 */
 	private static char[][] _map;
 
-	public LoadFromFile(GameBoard gameBoard, int level) throws LoadLevelException {
+	public LoadFromFile(GameBoard gameBoard, int level) {
 		super(gameBoard, level);
 	}
 
