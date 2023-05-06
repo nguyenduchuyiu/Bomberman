@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities.character.enemy.ai;
+package uet.oop.bomberman.entities.character.enemy.AI;
 
 public class PathFinding {
     double G; //khoang cach tu diem bat dau den dieu hien tai

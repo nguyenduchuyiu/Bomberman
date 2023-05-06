@@ -13,13 +13,6 @@ public class Flame extends Entity {
 	protected int xOrigin, yOrigin;
 	protected FlameSegment[] _flameSegments = new FlameSegment[0];
 
-	/**
-	 *
-	 * @param x hoành độ bắt đầu của Flame
-	 * @param y tung độ bắt đầu của Flame
-	 * @param direction là hướng của Flame
-	 * @param radius độ dài cực đại của Flame
-	 */
 	public Flame(int x, int y, int direction, int radius, GameBoard gameBoard) {
 		xOrigin = x;
 		yOrigin = y;
@@ -31,21 +24,12 @@ public class Flame extends Entity {
 		createFlameSegments();
 	}
 
-	/**
-	 * Tạo các FlameSegment, mỗi segment ứng một đơn vị độ dài
-	 */
 	private void createFlameSegments() {
-		/**
-		 * tính toán độ dài Flame, tương ứng với số lượng segment
-		 */
+
 		_flameSegments = new FlameSegment[calculatePermitedDistance()];
 
-		/**
-		 * biến last dùng để đánh dấu cho segment cuối cùng
-		 */
 		boolean last;
 
-		// TODO: tạo các segment dưới đây
 		int x = (int)_x;
 		int y = (int)_y;
 		for (int i =0; i < _flameSegments.length;i++)
@@ -65,12 +49,7 @@ public class Flame extends Entity {
 		}
 	}
 
-	/**
-	 * Tính toán độ dài của Flame, nếu gặp vật cản là Brick/Wall, độ dài sẽ bị cắt ngắn
-	 * @return
-	 */
 	private int calculatePermitedDistance() {
-		// TODO: thực hiện tính toán độ dài của Flame
 		int radius = 0;
 		int x = (int)_x;
 		int y = (int)_y;
@@ -114,7 +93,6 @@ public class Flame extends Entity {
 
 	@Override
 	public boolean collide(Entity e) {
-		// TODO: xử lý va chạm với Bomber, Enemy. Chú ý đối tượng này có vị trí chính là vị trí của Bomb đã nổ
 		return true;
 	}
 }

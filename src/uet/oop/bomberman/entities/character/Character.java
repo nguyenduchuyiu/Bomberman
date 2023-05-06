@@ -11,7 +11,7 @@ import uet.oop.bomberman.graphics.Screen;
 public abstract class Character extends AnimatedEntitiy {
 	
 	protected GameBoard _gameBoard;
-	protected int _direction = -1;
+	public int _direction = -1;
 	protected boolean _alive = true;
 	public boolean _moving = false;
 	public int _timeAfter = 40;
@@ -67,5 +67,9 @@ public abstract class Character extends AnimatedEntitiy {
 
 	public void set_direction(int _direction) {
 		this._direction = _direction;
+	}
+
+	public boolean getAlive() {
+		return this._alive;
 	}
 }

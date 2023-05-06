@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities.tile;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.level.Coordinates;
+import uet.oop.bomberman.level.ChangeUnits;
 
 /**
  * Entity cố định, không di chuyển
@@ -23,7 +23,7 @@ public abstract class Tile extends Entity {
 	
 	@Override
 	public void render(Screen screen) {
-		screen.renderEntity( Coordinates.tileToPixel(_x), Coordinates.tileToPixel(_y), this);
+		screen.renderEntity( ChangeUnits.tileToPixel(_x), ChangeUnits.tileToPixel(_y), this);
 	}
 	
 	@Override

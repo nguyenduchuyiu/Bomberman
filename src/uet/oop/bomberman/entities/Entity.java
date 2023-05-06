@@ -1,14 +1,14 @@
 package uet.oop.bomberman.entities;
 
-import uet.oop.bomberman.graphics.IRender;
+import uet.oop.bomberman.graphics.Render;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.level.Coordinates;
+import uet.oop.bomberman.level.ChangeUnits;
 
 /**
  * Lớp đại diện cho tất cả thực thể trong game (Bomber, Enemy, Wall, Brick,...)
  */
-public abstract class Entity implements IRender {
+public abstract class Entity implements Render {
 
 	protected double _x, _y;
 	protected boolean _removed = false;
@@ -46,7 +46,7 @@ public abstract class Entity implements IRender {
 	 * @return
 	 */
 	public abstract boolean collide(Entity e);
-	
+
 	public double getX() {
 		return _x;
 	}
@@ -56,10 +56,15 @@ public abstract class Entity implements IRender {
 	}
 	
 	public int getXTile() {
-		return Coordinates.pixelToTile(_x + _sprite.SIZE / 2);
+		return ChangeUnits.pixelToTile(_x + _sprite.SIZE / 2);
 	}
 	
 	public int getYTile() {
-		return Coordinates.pixelToTile(_y - _sprite.SIZE / 2);
+		return ChangeUnits.pixelToTile(_y - _sprite.SIZE / 2);
 	}
+
+    public Entity getTopEntity() {
+        return null;
+    }
+
 }

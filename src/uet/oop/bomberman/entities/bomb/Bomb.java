@@ -8,7 +8,7 @@ import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.level.Coordinates;
+import uet.oop.bomberman.level.ChangeUnits;
 
 public class Bomb extends AnimatedEntitiy {
 
@@ -77,7 +77,6 @@ public class Bomb extends AnimatedEntitiy {
      */
 	protected void explode() {
 
-		// TODO: xử lý khi Character đứng tại vị trí Bomb
 		_allowedToPassThru = true;
 		_exploded = true;
 		Character a = _gameBoard.getCharacterAtExcluding((int)_x,(int)_y,null);
@@ -85,7 +84,6 @@ public class Bomb extends AnimatedEntitiy {
 		{
 			a.kill();
 		}
-		// TODO: tạo các Flame
 		_flames = new Flame[4];
 		for (int i = 0; i < _flames.length; i++)
 			_flames[i] = new Flame((int)_x,(int)_y,i, Game.getBombRadius(),_gameBoard);
@@ -105,11 +103,10 @@ public class Bomb extends AnimatedEntitiy {
 
 	@Override
 	public boolean collide(Entity e) {
-        // TODO: xử lý khi Bomber đi ra sau khi vừa đặt bom (_allowedToPassThru)
 		if (e instanceof Bomber)
 		{
-			double x = e.getX() - Coordinates.tileToPixel(getX());
-			double y = e.getY() - Coordinates.tileToPixel(getY());
+			double x = e.getX() - ChangeUnits.tileToPixel(getX());
+			double y = e.getY() - ChangeUnits.tileToPixel(getY());
 			// kiem tra cac gia tri xem nguoi choi da ra ngoai bom chua thu cac gia tri
 			if (!(x>=-10)&& x <16 && y >=1 && y <=28)
 			{
@@ -119,7 +116,6 @@ public class Bomb extends AnimatedEntitiy {
 			return false;
 		}
 
-        // TODO: xử lý va chạm với Flame của Bomb khác
 		if (e instanceof Bomb)
 		{
 			_timeToExplode = 0;

@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities.tile.destroyable;
 
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.level.Coordinates;
+import uet.oop.bomberman.level.ChangeUnits;
 
 public class Brick extends DestroyableTile {
 	
@@ -18,8 +18,8 @@ public class Brick extends DestroyableTile {
 	
 	@Override
 	public void render(Screen screen) {
-		int x = Coordinates.tileToPixel(_x);
-		int y = Coordinates.tileToPixel(_y);
+		int x = ChangeUnits.tileToPixel(_x);
+		int y = ChangeUnits.tileToPixel(_y);
 		
 		if(_destroyed) {
 			_sprite = movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1, Sprite.brick_exploded2);

@@ -3,16 +3,13 @@ package uet.oop.bomberman.entities.character.enemy;
 import uet.oop.bomberman.GameBoard;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Notification;
 import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
-import uet.oop.bomberman.entities.character.enemy.ai.AI;
+import uet.oop.bomberman.entities.character.enemy.AI.AI;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.level.Coordinates;
-
-import java.awt.*;
+import uet.oop.bomberman.level.ChangeUnits;
 
 public abstract class Enemy extends Character {
 
@@ -79,10 +76,6 @@ public abstract class Enemy extends Character {
 	
 	@Override
 	public void calculateMove() {
-		// TODO: Tính toán hướng đi và di chuyển Enemy theo _ai và cập nhật giá trị cho _direction
-		// TODO: sử dụng canMove() để kiểm tra xem có thể di chuyển tới điểm đã tính toán hay không
-		// TODO: sử dụng move() để di chuyển
-		// TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
 		int x= 0, y = 0;
 		if (_steps<=0)
 		{
@@ -117,7 +110,6 @@ public abstract class Enemy extends Character {
 	
 	@Override
 	public boolean canMove(double x, double y) {
-		// TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
 		double x1 = _x, y1 = _y ;
 		// y = _y -16
 
@@ -126,8 +118,8 @@ public abstract class Enemy extends Character {
 		if(_direction == 2) { x1= x1+8; y1= y1-15;}
 		if(_direction == 3) { x1= x1 +15; y1 = y1-8;}
 
-		int xx = Coordinates.pixelToTile(x1) +(int)x;
-		int yy = Coordinates.pixelToTile(y1) +(int)y;
+		int xx = ChangeUnits.pixelToTile(x1) +(int)x;
+		int yy = ChangeUnits.pixelToTile(y1) +(int)y;
 
 		Entity a = _gameBoard.getEntity(xx, yy, this);
 
@@ -136,13 +128,11 @@ public abstract class Enemy extends Character {
 
 	@Override
 	public boolean collide(Entity e) {
-		// TODO: xử lý va chạm với Flame
 		if (e instanceof Flame)
 		{
 			kill();
 			return true;
 		}
-		// TODO: xử lý va chạm với Bomber
 		if (e instanceof Bomber)
 		{
 			((Bomber) e).kill();
@@ -155,11 +145,7 @@ public abstract class Enemy extends Character {
 	public void kill() {
 		if(!_alive) return;
 		_alive = false;
-		
-		_gameBoard.addPoints(_points);
-
-		Notification msg = new Notification("+" + _points, getXNotification(), getYNotification(), 2, Color.white, 14);
-		_gameBoard.addNotification(msg);
+		Game.playSE(6);
 	}
 	
 	

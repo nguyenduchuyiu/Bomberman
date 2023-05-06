@@ -4,9 +4,6 @@ import uet.oop.bomberman.graphics.Screen;
 
 import java.awt.*;
 
-/**
- * Hiển thị thông điệp
- */
 public class Notification extends Entity {
 
 	protected String _notification;

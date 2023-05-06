@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities.character.enemy.ai;
+package uet.oop.bomberman.entities.character.enemy.AI;
 
 public class Pair<K, V> {
     private K key;

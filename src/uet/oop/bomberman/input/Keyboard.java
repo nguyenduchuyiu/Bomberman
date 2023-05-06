@@ -3,12 +3,9 @@ package uet.oop.bomberman.input;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-/**
- * Tiếp nhận và xử lý các sự kiện nhập từ bàn phím
- */
 public class Keyboard implements KeyListener {
 	
-	private boolean[] keys = new boolean[120]; //120 is enough to this game
+	private boolean[] keys = new boolean[120];
 	public boolean up, down, left, right, space, auto;
 	
 	public void update() {

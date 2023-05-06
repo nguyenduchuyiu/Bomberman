@@ -13,12 +13,12 @@ public class FlameItem extends Item {
 
 	@Override
 	public boolean collide(Entity e) {
-		// TODO: xử lý Bomber ăn Item
 		if (e instanceof Bomber)
 		{
 			if (e.isRemoved() == false)
 			{
 				Game.addBombRadius(1);
+				Game.playSE(7);
 				remove();
 			}
 		}

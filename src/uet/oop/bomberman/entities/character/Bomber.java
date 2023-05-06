@@ -6,11 +6,11 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
-import uet.oop.bomberman.entities.character.enemy.ai.AutoPlayBomber;
+import uet.oop.bomberman.entities.character.enemy.AI.AIPlayBomber;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
-import uet.oop.bomberman.level.Coordinates;
+import uet.oop.bomberman.level.ChangeUnits;
 
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +20,6 @@ public class Bomber extends Character {
     private List<Bomb> _bombs;
     protected Keyboard _input;
     public boolean autoPlay = false;
-
     /**
      * nếu giá trị này < 0 thì cho phép đặt đối tượng Bomb tiếp theo,
      * cứ mỗi lần đặt 1 Bomb mới, giá trị này sẽ được reset về 0 và giảm dần trong
@@ -28,14 +27,14 @@ public class Bomber extends Character {
      */
     protected int _timeBetweenPutBombs = 0;
 
-    AutoPlayBomber ai;
+    AIPlayBomber ai;
 
     public Bomber(int x, int y, GameBoard gameBoard) {
         super(x, y, gameBoard);
         _bombs = _gameBoard.getBombs();
         _input = _gameBoard.getInput();
         _sprite = Sprite.player_right;
-        ai = new AutoPlayBomber(this, gameBoard);
+        ai = new AIPlayBomber(this, gameBoard);
     }
 
     @Override
@@ -93,8 +92,8 @@ public class Bomber extends Character {
 
     public void doPlaceBomb() {
         if (_timeBetweenPutBombs < 0 && Game.getBombRate() > 0) {
-            int xx = Coordinates.pixelToTile(_x + 6);
-            int yy = Coordinates.pixelToTile(_y - 9);
+            int xx = ChangeUnits.pixelToTile(_x + 6);
+            int yy = ChangeUnits.pixelToTile(_y - 9);
             placeBomb(xx, yy);
             Game.addBombRate(-1);
             _timeBetweenPutBombs = 30;
@@ -138,9 +137,6 @@ public class Bomber extends Character {
 
     @Override
     protected void calculateMove() {
-        // TODO: xử lý nhận tín hiệu điều khiển hướng đi từ _input và gọi move() để thực
-        // hiện di chuyển
-        // TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
         int x = 0, y = 0;
         if (_input.up)
             y--;// len
@@ -153,18 +149,17 @@ public class Bomber extends Character {
         doMove(x, y);
     }
 
-    public void doMove(int x, int y) {
-        if (x != 0 || y != 0) {
-            move(x * Game.getBomberSpeed(), y * Game.getBomberSpeed());
+    public void doMove(int xx, int yy) {
+        if (xx != 0 || yy != 0) {
+            move(xx * Game.getBomberSpeed(), yy * Game.getBomberSpeed());
             _moving = true;
-        } else
+        } else {
             _moving = false;
+        }
     }
 
     @Override
     public boolean canMove(double x, double y) {
-        // TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di
-        // chuyển tới đó hay không
         for (int c = 0; c < 4; c++) {
             double xt = ((_x + x) + c % 2 * 11) / 16; // 16 = Game.tiles_size
             double yt = ((_y + y) + c / 2 * 12 - 13) / 16;
@@ -178,9 +173,6 @@ public class Bomber extends Character {
 
     @Override
     public void move(double xa, double ya) {
-        // TODO: sử dụng canMove() để kiểm tra xem có thể di chuyển tới điểm đã tính
-        // toán hay không và thực hiện thay đổi tọa độ _x, _y
-        // TODO: nhớ cập nhật giá trị _direction sau khi di chuyển
         if (xa > 0)
             _direction = 1;
         if (xa < 0)
@@ -198,8 +190,6 @@ public class Bomber extends Character {
 
     @Override
     public boolean collide(Entity e) {
-        // TODO: xử lý va chạm với Flame
-        // TODO: xử lý va chạm với Enemy
         if (e instanceof Flame) {
             kill();
         }
@@ -207,6 +197,7 @@ public class Bomber extends Character {
         if (e instanceof Enemy) {
             kill();
         }
+
         return true;
     }
 
@@ -219,6 +210,14 @@ public class Bomber extends Character {
             }
         }
     }
+
+    public int getXTileBomber() {
+		return ChangeUnits.pixelToTile(getX());
+	}
+	
+	public int getYTileBomber() {
+		return ChangeUnits.pixelToTile(getY() - 16);
+	}
 
     private void chooseSprite() {
         switch (_direction) {
