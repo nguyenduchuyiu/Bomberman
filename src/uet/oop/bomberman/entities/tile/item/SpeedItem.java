@@ -17,7 +17,7 @@ public class SpeedItem extends Item {
 		{
 			if (e.isRemoved() == false)
 			{
-				Game.addBomberSpeed(1);
+				Game.addBomberSpeed(0.5);
 				Game.playSE(7);
 				remove();
 			}
